@@ -1,0 +1,25 @@
+spring.cloud.stream.kafka.streams.binder:
+  brokers: localhost:9092
+  configuration:
+    commit.interval.ms: 1000
+    default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+    default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+spring.cloud.stream.bindings.process-out-0:
+  destination: customer
+spring.cloud.stream.bindings.process-out-1:
+  destination: customer-details
+spring.cloud.stream.bindings.process-out-2:
+  destination: account
+spring.cloud.stream.bindings.process-out-3:
+  destination: account-connect
+spring.cloud.stream.bindings.process-out-4:
+  destination: transaction
+spring.cloud.stream.bindings.process-out-5:
+  destination: atm-transaction
+spring.cloud.stream.bindings.process-out-6:
+  destination: auto-transaction
+spring.cloud.stream.bindings.process-out-7:
+  destination: transfer-transaction
+spring.cloud.stream.bindings.process-in-0:
+  destination: bank
+spring.application.name: bank-branching
