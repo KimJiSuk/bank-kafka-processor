@@ -17,17 +17,37 @@ public class LogBranch {
         return input -> {
             input = input.map(((key, value) -> new KeyValue<>(getKeyByValue(value), value)));
 
-            Predicate<String, String> customer = (k, v) -> k != null && v.split(",")[0].equals("고객");
-            Predicate<String, String> customerDetails = (k, v) -> k != null && v.split(",")[0].equals("고객상세");
-            Predicate<String, String> account = (k, v) -> k != null && v.split(",")[0].equals("계좌");
-            Predicate<String, String> accountConnect = (k, v) -> k != null && v.split(",")[0].equals("연결계좌");
-            Predicate<String, String> transaction = (k, v) -> k != null && v.split(",")[0].equals("거래내역");
-            Predicate<String, String> atmTransaction = (k, v) -> k != null && v.split(",")[0].equals("ATM거래내역");
-            Predicate<String, String> autoTransaction = (k, v) -> k != null && v.split(",")[0].equals("자동이체거래내역");
-            Predicate<String, String> transferTransaction = (k, v) -> k != null && v.split(",")[0].equals("이체거래내역");
+            Predicate<String, String> customer = (k, v) -> v.split(",")[0].equals("고객");
+            Predicate<String, String> customerDetails = (k, v) -> v.split(",")[0].equals("고객상세");
+            Predicate<String, String> account = (k, v) -> {
+                String[] temp = v.split(",");
+                return temp[0].equals("계좌") && temp[temp.length-1].equals("입출금");
+            };
+            Predicate<String, String> safebox = (k, v) -> {
+                String[] temp = v.split(",");
+                return temp[0].equals("계좌") && temp[temp.length-1].equals("세이프박스");
+            };
+            Predicate<String, String> accountConnect = (k, v) -> v.split(",")[0].equals("연결계좌");
 
-            return input.branch(customer, customerDetails, account, accountConnect, transaction,
-                    atmTransaction, autoTransaction, transferTransaction);
+            Predicate<String, String> atmTransaction = (k, v) -> {
+                String[] temp = v.split(",");
+                return v.split(",")[0].equals("거래내역") && temp[temp.length-2].equals("ATM");
+            };
+            Predicate<String, String> autoTransaction = (k, v) -> {
+                String[] temp = v.split(",");
+                return v.split(",")[0].equals("거래내역") && temp[temp.length-2].equals("AUT");
+            };
+            Predicate<String, String> transferTransaction = (k, v) -> {
+                String[] temp = v.split(",");
+                return v.split(",")[0].equals("거래내역") && temp[temp.length-2].equals("TRN");
+            };
+            Predicate<String, String> atmTransactionDetails = (k, v) -> v.split(",")[0].equals("ATM거래내역");
+            Predicate<String, String> autoTransactionDetails = (k, v) -> v.split(",")[0].equals("자동이체거래내역");
+            Predicate<String, String> transferTransactionDetails = (k, v) -> v.split(",")[0].equals("이체거래내역");
+
+            return input.branch(customer, customerDetails, account, safebox, accountConnect,
+                    atmTransaction, autoTransaction, transferTransaction,
+                    atmTransactionDetails, autoTransactionDetails, transferTransactionDetails);
         };
     }
 

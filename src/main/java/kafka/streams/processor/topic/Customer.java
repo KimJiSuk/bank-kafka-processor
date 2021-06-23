@@ -5,16 +5,16 @@ import lombok.Getter;
 @Getter
 public class Customer {
 
-    public Customer(String customer, String customerDetails) {
-        String[] customerList = customer.split(",", -1);
-        String[] customerDetailsList = customerDetails.split(",", -1);
+    public Customer(String customer, String customerDetail) {
+        String[] customers = customer.split(",", -1);
+        String[] customerDetails = customerDetail.split(",", -1);
 
-        this.cstno = customerList[1];
-        this.custNm = customerList[3];
-        this.recNm = customerList[4];
-        this.sexCd = customerDetailsList[3];
-        this.birth = customerDetailsList[4];
-        this.createAt = customerList[2];
+        this.cstno = customers[1];
+        this.custNm = customers[3];
+        this.recNm = customers[4];
+        this.sexCd = customerDetails[3];
+        this.birth = customerDetails[4];
+        this.createAt = customers[2];
     }
 
     private final String cstno;

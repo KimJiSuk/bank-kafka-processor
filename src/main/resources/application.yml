@@ -4,17 +4,25 @@ spring.cloud.stream.kafka.streams.binder:
     commit.interval.ms: 1000
     default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
     default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-spring.cloud.function.definition: process;customer
+spring.cloud.function.definition: process;customer;account;safebox
 spring.cloud.stream.bindings:
   process-in-0.destination: bank
   process-out-0.destination: customer
   process-out-1.destination: customer-details
   process-out-2.destination: account
-  process-out-3.destination: account-connect
-  process-out-4.destination: transaction
+  process-out-3.destination: safebox
+  process-out-4.destination: account-connect
   process-out-5.destination: atm-transaction
   process-out-6.destination: auto-transaction
   process-out-7.destination: transfer-transaction
+  process-out-8.destination: atm-transaction-details
+  process-out-9.destination: auto-transaction-details
+  process-out-10.destination: transfer-transaction-details
   customer-in-0.destination: customer
   customer-in-1.destination: customer-details
   customer-out-0.destination: mysql-customer
+  account-in-0.destination: account
+  account-out-0.destination: mysql-account
+  safebox-in-0.destination: safebox
+  safebox-in-1.destination: account-connect
+  safebox-out-0.destination: mysql-account
