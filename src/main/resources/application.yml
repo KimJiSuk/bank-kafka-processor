@@ -4,6 +4,7 @@ spring.cloud.stream.kafka.streams.binder:
     commit.interval.ms: 1000
     default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
     default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+spring.cloud.function.definition: process;customer
 spring.cloud.stream.bindings:
   process-in-0.destination: bank
   process-out-0.destination: customer
@@ -14,4 +15,6 @@ spring.cloud.stream.bindings:
   process-out-5.destination: atm-transaction
   process-out-6.destination: auto-transaction
   process-out-7.destination: transfer-transaction
-spring.application.name: bank-branching
+  customer-in-0.destination: customer
+  customer-in-1.destination: customer-details
+  customer-out-0.destination: mysql-customer
