@@ -1,7 +1,7 @@
 # 본 과제
 
 ## Overview
-> Kafka topic data -> MySQL, 파이프 라인 구성
+> 사전 준비 된 Kafka Topic[bank] -> 파이프 라인 구성 -> Insert MySQL
 
 
 ## Requirements
