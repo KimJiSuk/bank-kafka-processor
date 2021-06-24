@@ -24,6 +24,7 @@ public class Transaction {
         this.txChnl = transactions[4];
         this.aftrBal = transactions[5];
 
+        // 거래채널에 따라 값 셋팅
         switch (this.txChnl) {
             case "ATM":
                 this.atmCd = transactionDetails[transactionDetails.length-1];

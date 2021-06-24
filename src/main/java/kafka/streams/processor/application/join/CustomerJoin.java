@@ -20,6 +20,7 @@ public class CustomerJoin {
 
     @Bean
     public BiFunction<KStream<String, String>, KStream<String, String>, KStream<String, Customer>> customer() {
+        // 고객, 고객상세 Join
         return (customer, customerDetails) -> customer.join(customerDetails,
                 Customer::new,
                 JoinWindows.of(Duration.ofSeconds(d_seconds)),

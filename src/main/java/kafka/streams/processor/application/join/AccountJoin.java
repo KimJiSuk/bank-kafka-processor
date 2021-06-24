@@ -22,11 +22,13 @@ public class AccountJoin {
 
     @Bean
     public Function<KStream<String, String>, KStream<String, Account>> account() {
+        // Only 계좌만 있는 입출금
         return input -> input.map((k, v) -> new KeyValue<>(k, new Account(v)));
     }
 
     @Bean
     public BiFunction<KStream<String, String>, KStream<String, String>, KStream<String, Account>> safebox() {
+        // 계좌, 연결 계좌 둘 다 있는 세이프 박스 Join
         return (safebox, accountConnect) -> safebox.join(accountConnect,
                 Account::new,
                 JoinWindows.of(Duration.ofSeconds(d_seconds)),

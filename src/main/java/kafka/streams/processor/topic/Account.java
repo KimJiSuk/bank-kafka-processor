@@ -11,6 +11,7 @@ public class Account {
 
     private static final String EMPTY_STRING = "";
 
+    // Only 계좌만 있을 때 생성자
     public Account(String account) {
         String[] accounts = account.split(",", -1);
 
@@ -21,6 +22,7 @@ public class Account {
         this.createAt = accounts[2];
     }
 
+    // 세이프 박스 계좌 생성자
     public Account(String account, String safeBox) {
         String[] accounts = account.split(",", -1);
         String[] safeBoxes = safeBox.split(",", -1);

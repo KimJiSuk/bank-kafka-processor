@@ -13,6 +13,10 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.function.Consumer;
 
+/*
+데이터 정제가 끝난 mysql-customer, mysql-account, mysql-transaction 토픽에 있는
+데이터를 MySQL Database Insert
+ */
 @Configuration
 @RequiredArgsConstructor
 public class PublishRecord {
