@@ -1,10 +1,12 @@
+
 spring.cloud.stream.kafka.streams.binder:
   brokers: localhost:9092
   configuration:
     commit.interval.ms: 1000
     default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
     default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-spring.cloud.function.definition: process;customer;account;safebox;atmTransaction;autoTransaction;transferTransaction
+spring.cloud.function.definition: process;customer;account;safebox;atmTransaction;autoTransaction;transferTransaction;
+  consumeCustomer;consumeAccount;consumeTransaction;
 spring.cloud.stream.bindings:
   process-in-0.destination: bank
   process-out-0.destination: customer
@@ -35,7 +37,21 @@ spring.cloud.stream.bindings:
   transferTransaction-in-0.destination: transfer-transaction
   transferTransaction-in-1.destination: transfer-transaction-details
   transferTransaction-out-0.destination: mysql-transaction
+  consumeCustomer-in-0.destination: mysql-customer
+  consumeAccount-in-0.destination: mysql-account
+  consumeTransaction-in-0.destination: mysql-transaction
 spring.cloud.stream.join.duration.second:
   customer: 5
   account: 3
   transaction: 3
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: js
+    password: admin
+    url: "jdbc:mysql://localhost:3306/bank?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Seoul"
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: false
+    show-sql: true

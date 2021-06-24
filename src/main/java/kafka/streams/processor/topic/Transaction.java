@@ -1,8 +1,11 @@
 package kafka.streams.processor.topic;
 
-import lombok.Getter;
+import lombok.*;
 
 @Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class Transaction {
 
     private static final String EMPTY_STRING = "";
@@ -39,26 +42,13 @@ public class Transaction {
         }
     }
 
-    private final String acno;
-    private final String seqno;
-    private final String regDttm;
-    private final String txChnl;
-    private final String aftrBal;
-    private final String atmCd;
-    private final String autoCycl;
-    private final String recvNm;
+    private String acno;
+    private String seqno;
+    private String regDttm;
+    private String txChnl;
+    private String aftrBal;
+    private String atmCd;
+    private String autoCycl;
+    private String recvNm;
 
-    @Override
-    public String toString() {
-        return "Transaction{" +
-                "acno='" + acno + '\'' +
-                ", seqno='" + seqno + '\'' +
-                ", regDttm='" + regDttm + '\'' +
-                ", txChnl='" + txChnl + '\'' +
-                ", aftrBal='" + aftrBal + '\'' +
-                ", atmCd='" + atmCd + '\'' +
-                ", recvNm='" + recvNm + '\'' +
-                ", autoCycl='" + autoCycl + '\'' +
-                '}';
-    }
 }

@@ -1,8 +1,11 @@
 package kafka.streams.processor.topic;
 
-import lombok.Getter;
+import lombok.*;
 
 @Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class Customer {
 
     public Customer(String customer, String customerDetail) {
@@ -17,22 +20,11 @@ public class Customer {
         this.createAt = customers[2];
     }
 
-    private final String cstno;
-    private final String custNm;
-    private final String recNm;
-    private final String sexCd;
-    private final String birth;
-    private final String createAt;
+    private String cstno;
+    private String custNm;
+    private String recNm;
+    private String sexCd;
+    private String birth;
+    private String createAt;
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "cstno='" + cstno + '\'' +
-                ", custNm='" + custNm + '\'' +
-                ", recNm='" + recNm + '\'' +
-                ", sexCd='" + sexCd + '\'' +
-                ", birth='" + birth + '\'' +
-                ", createAt=" + createAt +
-                '}';
-    }
 }
