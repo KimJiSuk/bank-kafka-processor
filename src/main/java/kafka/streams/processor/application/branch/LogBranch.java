@@ -1,4 +1,4 @@
-package kafka.streams.processor.branch;
+package kafka.streams.processor.application.branch;
 
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.kstream.KStream;

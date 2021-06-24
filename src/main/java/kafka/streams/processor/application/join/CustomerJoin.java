@@ -1,8 +1,7 @@
-package kafka.streams.processor.join;
+package kafka.streams.processor.application.join;
 
-import kafka.streams.processor.topic.Account;
+import kafka.streams.processor.topic.Customer;
 import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.kstream.JoinWindows;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.StreamJoined;
@@ -12,23 +11,17 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 @Configuration
-public class AccountJoin {
+public class CustomerJoin {
 
-    @Value("${spring.cloud.stream.join.duration.second.account}")
+    @Value("${spring.cloud.stream.join.duration.second.customer}")
     private int d_seconds;
 
     @Bean
-    public Function<KStream<String, String>, KStream<String, Account>> account() {
-        return input -> input.map((k, v) -> new KeyValue<>(k, new Account(v)));
-    }
-
-    @Bean
-    public BiFunction<KStream<String, String>, KStream<String, String>, KStream<String, Account>> safebox() {
-        return (safebox, accountConnect) -> safebox.join(accountConnect,
-                Account::new,
+    public BiFunction<KStream<String, String>, KStream<String, String>, KStream<String, Customer>> customer() {
+        return (customer, customerDetails) -> customer.join(customerDetails,
+                Customer::new,
                 JoinWindows.of(Duration.ofSeconds(d_seconds)),
                 StreamJoined.with(Serdes.String(), Serdes.String(), Serdes.String()));
     }

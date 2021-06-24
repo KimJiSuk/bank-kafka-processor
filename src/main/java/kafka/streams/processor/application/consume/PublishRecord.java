@@ -1,4 +1,4 @@
-package kafka.streams.processor.consume;
+package kafka.streams.processor.application.consume;
 
 import kafka.streams.processor.topic.Account;
 import kafka.streams.processor.topic.Customer;

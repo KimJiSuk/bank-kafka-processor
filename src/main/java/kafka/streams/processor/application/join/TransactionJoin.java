@@ -1,4 +1,4 @@
-package kafka.streams.processor.join;
+package kafka.streams.processor.application.join;
 
 import kafka.streams.processor.topic.Transaction;
 import org.apache.kafka.common.serialization.Serdes;
