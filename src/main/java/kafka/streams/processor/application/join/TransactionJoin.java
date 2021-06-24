@@ -20,6 +20,7 @@ public class TransactionJoin {
 
     @Bean
     public BiFunction<KStream<String, String>, KStream<String, String>, KStream<String, Transaction>> atmTransaction() {
+        // ATM Type 거래내역, ATM거래내역 Join
         return (atm, atmDetails) -> atm.join(atmDetails,
                 Transaction::new,
                 JoinWindows.of(Duration.ofSeconds(d_seconds)),
@@ -28,6 +29,7 @@ public class TransactionJoin {
 
     @Bean
     public BiFunction<KStream<String, String>, KStream<String, String>, KStream<String, Transaction>> autoTransaction() {
+        // AUT Type 거래내역, 자동이체거래내역 Join
         return (auto, autoDetails) -> auto.join(autoDetails,
                 Transaction::new,
                 JoinWindows.of(Duration.ofSeconds(d_seconds)),
@@ -36,6 +38,7 @@ public class TransactionJoin {
 
     @Bean
     public BiFunction<KStream<String, String>, KStream<String, String>, KStream<String, Transaction>> transferTransaction() {
+        // TRN Type 거래내역, 이체거래내역 Join
         return (transfer, transferDetails) -> transfer.join(transferDetails,
                 Transaction::new,
                 JoinWindows.of(Duration.ofSeconds(d_seconds)),

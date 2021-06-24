@@ -15,8 +15,11 @@ public class LogBranch {
     public Function<KStream<String, String>, KStream<String, String>[]> process() {
 
         return input -> {
+            // 사전 준비 데이터는 Round-Robin 방식으로 들어가 있기 때문에 Key 값이 없어, 셋팅 필요
+            // 향후 Join 위해서 Key 값 셋팅.
             input = input.map(((key, value) -> new KeyValue<>(getKeyByValue(value), value)));
 
+            // 10개의 토픽으로 branch
             Predicate<String, String> customer = (k, v) -> v.split(",")[0].equals("고객");
             Predicate<String, String> customerDetails = (k, v) -> v.split(",")[0].equals("고객상세");
             Predicate<String, String> account = (k, v) -> {
@@ -51,6 +54,9 @@ public class LogBranch {
         };
     }
 
+    /*
+    로그명으로 Key 값을 구함.
+     */
     private String getKeyByValue(String value) {
         String[] valueList = value.split(",");
 
