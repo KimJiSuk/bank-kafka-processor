@@ -27,4 +27,13 @@ public class Customer {
     private String birth;
     private String createAt;
 
+    public kafka.streams.processor.entity.Customer toEntity() {
+        return kafka.streams.processor.entity.Customer.builder()
+                .cstno(this.cstno)
+                .custNm(this.custNm)
+                .recNm(this.recNm)
+                .sexCd(this.sexCd)
+                .birth(this.birth)
+                .build();
+    }
 }

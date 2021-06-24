@@ -1,20 +1,27 @@
 package kafka.streams.processor.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "Tran")
+@IdClass(TranPK.class)
 public class Tran {
 
     @Id
     @Column(name = "acno")
     private String acno;
 
+    @Id
     @Column(name = "seqno")
     private String seqno;
 

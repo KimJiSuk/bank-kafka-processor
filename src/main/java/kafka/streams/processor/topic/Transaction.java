@@ -1,6 +1,10 @@
 package kafka.streams.processor.topic;
 
+import kafka.streams.processor.entity.Tran;
 import lombok.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -9,6 +13,7 @@ import lombok.*;
 public class Transaction {
 
     private static final String EMPTY_STRING = "";
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public Transaction(String transaction, String transactionDetail) {
         String[] transactions = transaction.split(",", -1);
@@ -50,5 +55,18 @@ public class Transaction {
     private String atmCd;
     private String autoCycl;
     private String recvNm;
+
+    public Tran toEntity() {
+        return Tran.builder()
+                .acno(this.acno)
+                .seqno(this.seqno)
+                .regDttm(LocalDateTime.parse(this.regDttm, dateTimeFormatter))
+                .txChnl(this.txChnl)
+                .aftrBal(this.aftrBal)
+                .atmCd(this.atmCd)
+                .autoCycl(this.autoCycl)
+                .recvNm(this.recvNm)
+                .build();
+    }
 
 }

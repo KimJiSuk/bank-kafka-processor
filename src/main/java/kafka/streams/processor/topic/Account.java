@@ -1,5 +1,6 @@
 package kafka.streams.processor.topic;
 
+import kafka.streams.processor.entity.Acco;
 import lombok.*;
 
 @Getter
@@ -36,4 +37,13 @@ public class Account {
     private String gdsNm;
     private String linkAcno;
     private String createAt;
+
+    public Acco toEntity() {
+        return Acco.builder()
+                .acno(this.acno)
+                .cstno(this.cstno)
+                .gdsNm(this.gdsNm)
+                .linkAcno(this.linkAcno)
+                .build();
+    }
 }
