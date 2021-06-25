@@ -2,14 +2,62 @@
 
 ## Overview
 > 사전 준비 된 Kafka Topic[bank] -> 파이프 라인 구성 -> Insert MySQL
-
+---
 ## 과제1
 <img width="500" alt="pipe-line" src="https://user-images.githubusercontent.com/3543580/123251344-0e47eb80-d526-11eb-9075-931a3beaf4c5.png">
 
+---
+## 과제2
 
+> SQL
+
+```
+select tr.age as '대',
+       SUM(IF(tr.week = 2, tr.cost, 0)) as '월',
+       SUM(IF(tr.week = 3, tr.cost, 0)) as '화',
+       SUM(IF(tr.week = 4, tr.cost, 0)) as '수',
+       SUM(IF(tr.week = 5, tr.cost, 0)) as '목',
+       SUM(IF(tr.week = 6, tr.cost, 0)) as '금',
+       SUM(IF(tr.week = 7, tr.cost, 0)) as '토',
+       SUM(IF(tr.week = 1, tr.cost, 0)) as '일'
+from (select t.*,
+             CONCAT(FLOOR((CAST(REPLACE(CURRENT_DATE,'-','') AS UNSIGNED) - CAST(c.birth AS UNSIGNED)) / 100000), '0대') as age,
+             DAYOFWEEK(t.reg_dttm) as 'week',
+             IF(STRCMP(t.acno, LAG(t.acno) over (ORDER BY t.acno, t.seqno)) = 0,
+                 ABS(t.aftr_bal - IFNULL(LAG(t.aftr_bal) over (ORDER BY t.acno, t.seqno), 0)), t.aftr_bal
+                 ) AS 'cost'
+    from tran t
+    join acco a on t.acno = a.acno
+    join customer c on a.cstno = c.cstno) tr
+GROUP BY tr.age
+ORDER BY tr.age
+```
+
+> SQL 실행계획
+<table>
+<tr><th>id</th><th>select_type</th><th>table</th><th>partitions</th><th>type</th><th>possible_keys</th><th>key</th><th>key_len</th><th>ref</th><th>rows</th><th>filtered</th><th>Extra</th></tr>
+<tr><td>1</td><td>PRIMARY</td><td><derived2></td><td>NULL</td><td>ALL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>300</td><td>100</td><td>Using temporary; Using filesort</td></tr>
+<tr><td>2</td><td>DERIVED</td><td>t</td><td>NULL</td><td>ALL</td><td>PRIMARY</td><td>NULL</td><td>NULL</td><td>NULL</td><td>300</td><td>100</td><td>Using temporary; Using filesort</td></tr>
+<tr><td>2</td><td>DERIVED</td><td>a</td><td>NULL</td><td>eq_ref</td><td>PRIMARY</td><td>PRIMARY</td><td>32</td><td>bank.t.acno</td><td>1</td><td>100</td><td>Using where</td></tr>
+<tr><td>2</td><td>DERIVED</td><td>c</td><td>NULL</td><td>eq_ref</td><td>PRIMARY</td><td>PRIMARY</td><td>32</td><td>bank.a.cstno</td><td>1</td><td>100</td><td>NULL</td></tr>
+</table>
+
+> SQL 실행결과
+<table>
+<tr><th>대</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th><th>일</th></tr>
+<tr><td>10대</td><td>258234</td><td>335708</td><td>268321</td><td>161524</td><td>54559</td><td>207735</td><td>268236</td></tr>
+<tr><td>20대</td><td>161743</td><td>322447</td><td>187916</td><td>376279</td><td>148248</td><td>313415</td><td>344742</td></tr>
+<tr><td>30대</td><td>406280</td><td>912161</td><td>376850</td><td>188902</td><td>210543</td><td>405862</td><td>261309</td></tr>
+<tr><td>40대</td><td>88704</td><td>211115</td><td>112369</td><td>131372</td><td>93740</td><td>302085</td><td>165480</td></tr>
+<tr><td>50대</td><td>107377</td><td>527568</td><td>179432</td><td>253968</td><td>10805</td><td>207920</td><td>134220</td></tr>
+<tr><td>60대</td><td>174084</td><td>318620</td><td>4458</td><td>58903</td><td>0</td><td>100024</td><td>124745</td></tr>
+<tr><td>70대</td><td>61889</td><td>0</td><td>65960</td><td>33069</td><td>97316</td><td>218522</td><td>41497</td></tr>
+</table>
+
+---
 ## 과제3
 
-SQL
+> SQL
 
 ```
 select tra.acno,
@@ -33,7 +81,7 @@ from (select tr.*,
 where tra.rank = 1
 ```
 
-SQL 실행계획
+> SQL 실행계획
 
 <table>
 <tr><th>id</th><th>select_type</th><th>table</th><th>partitions</th><th>type</th><th>possible_keys</th><th>key</th><th>key_len</th><th>ref</th><th>rows</th><th>filtered</th><th>Extra</th></tr>
@@ -44,7 +92,7 @@ SQL 실행계획
 <tr><td>4</td><td>MATERIALIZED</td><td>a</td><td>NULL</td><td>ALL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>30</td><td>90</td><td>Using where</td></tr>
 </table>
 
-SQL 실행결과
+> SQL 실행결과
 
 <table>
 <tr><th>acno</th><th>seqno</th><th>reg_dttm</th><th>tx_chnl</th><th>aftr_bal</th><th>atm_cd</th><th>recv_nm</th><th>auto_cycl</th></tr>
