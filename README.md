@@ -48,13 +48,14 @@ SQL 실행결과
 
 <table>
 <tr><th>acno</th><th>seqno</th><th>reg_dttm</th><th>tx_chnl</th><th>aftr_bal</th><th>atm_cd</th><th>recv_nm</th><th>auto_cycl</th></tr>
-<tr><td>333306</td><td>1</td><td>2021-01-05 15:00:00</td><td>ATM</td><td>85209</td><td>ATM05</td><td></td><td></td></tr>
+<tr><td>333306</td><td>7</td><td>2021-01-10 15:03:37</td><td>AUT</td><td>6089</td><td></td><td></td><td>월</td></tr>
 <tr><td>333308</td><td>10</td><td>2021-01-11 15:03:56</td><td>AUT</td><td>81605</td><td></td><td></td><td>월</td></tr>
 <tr><td>333309</td><td>1</td><td>2021-01-06 15:00:31</td><td>ATM</td><td>66468</td><td>ATM03</td><td></td><td></td></tr>
 <tr><td>333310</td><td>15</td><td>2021-01-10 15:03:13</td><td>AUT</td><td>4231</td><td></td><td></td><td>월</td></tr>
 <tr><td>333311</td><td>5</td><td>2021-01-09 15:02:23</td><td>ATM</td><td>27794</td><td>ATM01</td><td></td><td></td></tr>
 <tr><td>333312</td><td>2</td><td>2021-01-09 15:02:20</td><td>ATM</td><td>73857</td><td>ATM06</td><td></td><td></td></tr>
 </table>
+
 
 ## 환경
 ```
