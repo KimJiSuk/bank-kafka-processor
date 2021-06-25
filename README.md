@@ -11,3 +11,9 @@
 Java 11
 Spring Boot 2.5.1
 ```
+
+## Usage
+Application 실행
+```
+./gradlew build && java -jar build/libs/processor-1.0.0.jar
+```
